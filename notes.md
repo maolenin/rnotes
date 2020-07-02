@@ -32,6 +32,9 @@ mutate(cran3, size_mb = size / 2^20, size_gb = size_mb / 2^10)
 mutate(cran3, correct_size = size + 1000 )
 summarize(cran, avg_bytes = mean(size))
 
+#
+
 #Group
 by_package <- group_by(cran, package)
 summarize(by_package, mean(size))
+
