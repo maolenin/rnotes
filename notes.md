@@ -1,4 +1,4 @@
-###### sub setting
+##### Sub setting
     x <- data.frame("var1" = sample(1:5), "var2" = sample(6:10), "var3" = sample(11:15))
     x <- x[sample(1:5),]; x$var2[c(1,3)] = NA
     x[,1]
@@ -9,25 +9,24 @@
     x[(x$var1 <= 3 | x$var3 > 15),]
     x[which(x$var2 > 8),] # eliminating NAs
 
-# Sorting #
+##### Sorting
     sort(x$var1)
     sort(x$var1, decreasing = TRUE)
     sort(x$var2, na.last = TRUE) # NA at the end
     x[order(x$var1),] #order data frame
     x[order(x$var1, x$var3),] # first order var1, afeter var3
 
-# Sorting with plyr
+##### Sorting with plyr
     library(plyr)
     arrange(x, var1)
     arrange(x, desc(var1))
 
-# Adding Rows and columns
+##### Adding Rows and columns
     x$var4 <- rnorm(5)
     y <- cbind(x, rnorm(5))
 
-# Sum #
+##### Sum 
     sum(doc[, "V4"])
-
     mydf <- read.csv(path2csv,stringsAsFactors = FALSE)
     cran <- tbl_df(mydf)
     packageVersion("dplyr")
@@ -40,8 +39,7 @@
     select(cran, -(X:size))
     cran2 <- select(cran, size:ip_id)
 
-#Filter
-
+##### Filter
     filter(cran, package == "swirl")
     filter(cran, r_version == "3.1.1", country == "US")
     filter(cran, r_version <= "3.1.1", country == "IN")
@@ -50,21 +48,20 @@
     filter(cran, size > 100500, r_os == "linux-gnu")
     filter(cran, !is.na(r_version))
 
-#Arrange
-
+##### Arrange
     arrange(cran2, ip_id)
     arrange(cran2, desc(ip_id))
     arrange(cran2, package, ip_id)
     arrange(cran2, country, desc(r_version), ip_id)
     cran3 <- select(cran, ip_id, package, size)
 
-# Mutate #
+##### Mutate
     mutate(cran3, size_mb = size / 2^20)
     mutate(cran3, size_mb = size / 2^20, size_gb = size_mb / 2^10)
     mutate(cran3, correct_size = size + 1000 )
     summarize(cran, avg_bytes = mean(size))
 
-# Read XML With HTTPS #
+##### Read XML With HTTPS
     library(XML)
     library(RCurl)
     fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Frestaurants.xml"
@@ -78,7 +75,7 @@
     xmlSApply(rootNode, xmlValue) #join all values
     xpathSApply(rootNode, "//name", xmlValue)
 
-# Getting data from the web
+##### Getting data from the web
     if(!file.exists("./data")){dir.create("./data")}
     download.file(fileUrl, destfile = "./data/restaurants.csv", method = "curl")
     restData <- read.csv("./data/restaurants.csv")
@@ -111,18 +108,18 @@
     print(object.size(fakeData), units = "Mb")
     xt = xtabs(breaks ~ ., data = warpbreaks)
 
-# Creating new variables
+##### Creating new variables
     s1 <- seq(1, 10, by=2) # Create variables from 1 to 10 2 by 2
     s1 <- seq(1, 10, length=3) # same 1 but three elements
     x <- c(1, 3, 8, 25, 100); seq(along x) # variables in that order
 
-# READ HPPTS
+##### READ HPPTS
     library(xml2)
     suppressWarnings(dx<-read_xml("https://www.espn.com/nfl/team/_/name/bal/baltimore-ravens", as_html=TRUE))
     teams<-as.character(xml_contents(xml_find_all(dx,"//div[@class='game-info']")))
     scores<-as.character(xml_contents(xml_find_all(dx,"//div[@class='score']")))
 
-# READ JSON
+##### READ JSON
     library(jsonlite)
     jsonData <- fromJSON("https://api.github.com/users/jtleek/repos")
     cat(myjson)
@@ -130,21 +127,20 @@
     myjson <- toJSON(iris, pretty = TRUE) #Write
     cat(myjson)
 
-# Read SQL 
+##### Read SQL 
     acs <- read.csv("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv")
     sqldf works if you detach RMySQL
     detach("package:RMySQL", unload=TRUE)
     sqldf("select pwgtp1 from acs where AGEP < 50")
 
-# Read Lines by Lines in HTML 
+##### Read Lines by Lines in HTML 
     html <- readLines(url)
     nchar(html[10]) #Get the number of charcaters in the line 10
 
-# Read Fixed Files 
+##### Read Fixed Files 
     the lenghts in width must be included the blank spaces
     doc <- read.fwf(fileUrl, widths = c(10, 9, 4, 9, 4, 9, 4, 9, 4), skip=4)
 
-# Group
+##### Group
     by_package <- group_by(cran, package)
     summarize(by_package, mean(size))
-
