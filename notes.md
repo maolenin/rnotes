@@ -110,7 +110,7 @@
 
 ##### Creating new variables
     s1 <- seq(1, 10, by=2) # Create variables from 1 to 10 2 by 2
-    s1 <- seq(1, 10, length=3) # same 1 but three elements
+    s2 <- seq(1, 10, length=3) # same 1 but three elements
     x <- c(1, 3, 8, 25, 100); seq(along x) # variables in that order
 
 ##### READ HPPTS
