@@ -1,9 +1,9 @@
 # sub setting #
-'x <- data.frame("var1" = sample(1:5), "var2" = sample(6:10), "var3" = sample(11:15))'
-´x <- x[sample(1:5),]; x$var2[c(1,3)] = NA´
-x[,1]
-x[, "var1"]
-x[1:2, "var2"]
+`x <- data.frame("var1" = sample(1:5), "var2" = sample(6:10), "var3" = sample(11:15))`
+`x <- x[sample(1:5),]; x$var2[c(1,3)] = NA`
+`x[,1]`
+`x[, "var1"]`
+`x[1:2, "var2"]`
 x[1:2, ]
 x[(x$var1 <= 3 & x$var3 > 11),]
 x[(x$var1 <= 3 | x$var3 > 15),]
