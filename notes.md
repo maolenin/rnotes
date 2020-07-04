@@ -9,10 +9,10 @@
 
 `x[1:2, "var2"]`
 
-x[1:2, ]
-x[(x$var1 <= 3 & x$var3 > 11),]
-x[(x$var1 <= 3 | x$var3 > 15),]
-x[which(x$var2 > 8),] # eliminating NAs
+    x[1:2, ]
+    x[(x$var1 <= 3 & x$var3 > 11),]
+    x[(x$var1 <= 3 | x$var3 > 15),]
+    x[which(x$var2 > 8),] # eliminating NAs
 
 # Sorting #
 sort(x$var1)
