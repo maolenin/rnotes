@@ -7,8 +7,8 @@
     x[1:2, ]
     x[(x$var1 <= 3 & x$var3 > 11),]
     x[(x$var1 <= 3 | x$var3 > 15),]
-    x[which(x$var2 > 8),] # eliminating NAs
-
+    x[which(x$var2 > 8),] # eliminating NAs 
+    
 ##### Sorting
     sort(x$var1)
     sort(x$var1, decreasing = TRUE)
@@ -20,7 +20,46 @@
     library(plyr)
     arrange(x, var1)
     arrange(x, desc(var1))
-
+##### Managing DF with dplyr
+    library("dplyr")
+    packageVersion("dplyr")
+    head(select(chicago, city:dptp)) 
+    head(select(chicago, -(city:dptp)))
+    **replace from ..**
+    i <- match("city", names(chicago))
+    j <- match("dptp", names(chicago))
+    head(chicago[, -(i:j)])
+    .. replace to
+    chic.f <- filter(chicago, pm25tmean2 > 30)
+    chic.f <- filter(chicago, pm25tmean2 > 30 & tmpd > 80)
+    chicago <- arrange(chicago, date) # order
+    chicago <- arrange(chicago, desc(date)) # descending order
+    chicago <- rename(chicago, pm25 = pm25tmean2, dewpoint = dptp) #rename rows
+    head(select(chicago, pm25, pm25detrend))
+    chicago <- mutate(chicago, tempcat = factor(1 * (tmpd > 80), labels = c("cold", "hot")))
+    hotcold <- group_by(chicago, tempcat)
+    summarize(hotcold, pm25 = mean(pm25, na.rm = TRUE), o3 = max(o3tmean2), no2 = median(no2tmean2))
+    chicago <- mutate(chicago, year = as.POSIXlt(date)$year + 1900)
+    years <- group_by(chicago, year)
+    chicago %>% mutate(month = as.POSIXlt(date)$mon + 1) %>% group_by(month) %>% summarize(pm25 = mean(pm25, na.rm = TRUE), o3 = max(o3tmean2), no2 = median(no2tmean2)) 
+   ##### Merging Data
+    fileUrl1 = "https://raw.githubusercontent.com/DataScienceSpecialization/courses/master/03_GettingData/04_01_editingTextVariables/data/reviews.csv"
+    fileUrl2 = "https://raw.githubusercontent.com/DataScienceSpecialization/courses/master/03_GettingData/04_01_editingTextVariables/data/solutions.csv"
+    download.file(fileUrl1,destfile="./data/reviews.csv",method="curl")
+    download.file(fileUrl2,destfile="./data/solutions.csv",method="curl")
+    reviews = read.csv("./data/reviews.csv"); solutions <- read.csv("./data/solutions.csv")
+    mergedData = merge(reviews, solutions, by.x = "solution_id", by.y = "id", all = TRUE)
+    intersect(names(solutions), names(reviews))
+    mergedData2 = merge(reviews, solutions, all = TRUE)
+    
+   ###### Another way by dplyr
+    df1 = data.frame(id = sample(1:10), x = rnorm(10))
+    df2 = data.frame(id = sample(1:10), y = rnorm(10))
+    arrange(join(df1, df2), id)
+    df3 = data.frame(id = sample(1:10), z = rnorm(10))
+    dfList = list(df1, df2, df3)
+    join_all(dfList)
+    
 ##### Adding Rows and columns
     x$var4 <- rnorm(5)
     y <- cbind(x, rnorm(5))
@@ -29,7 +68,7 @@
     sum(doc[, "V4"])
     mydf <- read.csv(path2csv,stringsAsFactors = FALSE)
     cran <- tbl_df(mydf)
-    packageVersion("dplyr")
+    
     select(cran, ip_id, package, country)
     select(cran, r_arch:country)
     select(cran, r_arch:country)
@@ -75,7 +114,7 @@
     xmlSApply(rootNode, xmlValue) #join all values
     xpathSApply(rootNode, "//name", xmlValue)
 
-##### Getting data from the web
+##### Getting data from the web and subsetting
     if(!file.exists("./data")){dir.create("./data")}
     download.file(fileUrl, destfile = "./data/restaurants.csv", method = "curl")
     restData <- read.csv("./data/restaurants.csv")
@@ -97,6 +136,37 @@
     restData[restData$zipCode %in% c("21212", "21213"), ] # Sub setting with the condition
     restData$nearMe = restData$neighborhood %in% c("Roland Park", "Homeland") 
     table(restData$nearMe) # create a table with restaurants near me
+    restData$zipWrong = ifelse(restData$zipCode < 0, TRUE, FALSE)
+    table(restData$zipWrong, restData$zipCode < 0)
+   ###### Cutting
+    restData$zipGroups = cut(restData$zipCode, breaks = quantile(restData$zipCode))
+    table(restData$zipGroups)
+    table(restData$zipGroups, restData$zipCode)
+   ###### Easier Cutting
+    library(Hmisc)
+    restData$zipGroups = cut2(restData$zipCode, g = 4)
+    table(restData$zipGroups)
+   ###### Creating factor variables    
+    restData$zcf <- factor(restData$zipCode)
+    restData$zcf[1:10]
+   ###### Levels of factor variables
+    yesno <- sample(c("yes", "no"), size = 10, replace = TRUE)
+    yesnofac = factor(yesno, levels = c("yes", "no"))
+    relevel(yesnofac, ref="yes")
+   ###### using the mutate function
+    library(plyr)
+    library(Hmisc)
+    restData2 = mutate(restData, zipGroups = cut2(zipCode, g = 4))
+    table(restData2$zipGroups)
+   ###### Common transforms
+    abs(x)
+    sqrt(x)
+    ceiling(x) ceiling(3.475) is 4
+    floor(x) floor(3.475) is 3
+    round(x, digits = n) round(3.475, digits = 2) is 3.48
+    signif(x, digits = n) signif(3.475, digits = 2) is 3.5
+    log(x) natural logarimt
+    log2(x), log10(x) others
 
     DF <- as.data.frame(UCBAdmissions)
     xt <- xtabs(Freq ~ Gender + Admit, data = DF) # cross table
@@ -141,6 +211,28 @@
     the lenghts in width must be included the blank spaces
     doc <- read.fwf(fileUrl, widths = c(10, 9, 4, 9, 4, 9, 4, 9, 4), skip=4)
 
+##### Reshaping Data
+    library(reshape2)
+    mtcars$carname <- rownames(mtcars)
+    carMelt <- melt(mtcars, id = c("carname", "gear", "cyl"), measure.vars = c("mpg", "hp"))
+    head(carMelt, n = 3)
+    cylData <- dcast(carMelt, cyl ~ variable)
+
+##### Averaging values
+    tapply(InsectSprays$count, InsectSprays$spray, sum)
+    spIns = split(InsectSprays$count, InsectSprays$spray) another way
+    sprCount = lapply(spIns, sum)
+    unlist(sprCount)
+    sapply(spIns, sum)
+    ddply(InsectSprays, .(spray), summarise, sum = sum(count))
+    spraySums <- ddply(InsectSprays, .(spray), summarise, sum = ave(count, FUN = sum))
+
 ##### Group
     by_package <- group_by(cran, package)
     summarize(by_package, mean(size))
+    
+##### Clean variables into the workspace
+    rm(list = ls())
+
+##### Links
+[Tutorial plyr] (http://plyr.had.co.nz/09-user/)
