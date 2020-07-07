@@ -15,6 +15,12 @@
     sort(x$var2, na.last = TRUE) # NA at the end
     x[order(x$var1),] #order data frame
     x[order(x$var1, x$var3),] # first order var1, afeter var3
+##### Tidying Data with tidyr
+    library(tidyr)
+    gather(students, sex, count, -grade)
+    res <- gather(students2, sex_class, count, -grade)
+    separate(data = res, col = sex_class, into = c("sex", "class"))
+    
 
 ##### Sorting with plyr
     library(plyr)
