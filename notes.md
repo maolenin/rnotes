@@ -237,8 +237,62 @@
     by_package <- group_by(cran, package)
     summarize(by_package, mean(size))
     
+   ##### Fixing Character Vectors
+    tolower("A") A => a
+    toupper("a") a => A
+    strsplit("Hello.1", "\\.") # "Hello" "1" 
+    sub("_", "", "sorted_by",) # "sortedby"
+    sub("_", "", "sorted_by_name",) #"sortedby_name"
+    gsub("_", "", "sorted_by_name",) #"sortedbyname"
+    grep("Alameda", datatable$var) #positions
+    grep("Alameda", datatable$var, value = TRUE) #positions
+    table(grepl("Alameda", datatable$var))
+    datatable[!grepl("Alameda", datatable$var),]
+    nchar("Jeffrey Leek") # number of characters
+    substr("Jeffrey Leek", 1, 7) # "Jeffrey"
+    paste("Hello", "World") # "Hello World"
+    paste("Hello", "World") # "HelloWorld"
+    str_trim("Hello    ") # "Hello"
+    
+##### Regular Expressions
+###### Metacharacters
+    ^i think # at the begining of the line
+    morning$ # at the end of the line
+    [Bb] # Match Lower and uppercases
+    ^[Ii] am = search "I am" and "i am"
+    ^[0-9][a-zA-Z] # range of numbers and range of letters
+    [^?.]$ # at the end of the line
+    9.1 # search 9_1, 09-10, 09.11, 9/11
+    flood|fire # search: firewire, flood, firewall
+    ^[Gg]ood|[Bb]ad # Good or good athe the begining, Bad or bad in other positions.
+    ^([Gg]ood|[Bb]ad) # Good/good/Bad/bad a the the begining of the line.
+    [Gg]eorge( [Ww]\.)? [Bb]ush #
+    (.*) # Search somithing between ()
+    [0-9]+ (.*)[0-9]+ # any number +repetitive ....
+    [Bb]ush( +[^ ]+ +){1,5} debate
+    m,n # at least m but not more than n matches
+    m # exactly m matches
+    m, # At least m matches
+    +([a-zA-Z]+) +\1 + # Repetitions
+    ^s(.*)s # between s
+    
+##### Working with dates
+    date() #character
+    Sys.Date() #Date
+    format(d, "%a %b %d"
+    z = as.Dates(x, "%d%b%Y")
+    as.numeric(date1-date2)
+    library(lubridate)
+    mdy("08/04/2013") # "2013-08-04 UTC"
+    mdy_hms("08/04/2013 10:15:03") # "2013-08-04 10:15:03 UTC"
+    mdy_hms("08/04/2013 10:15:03", tz="Pacific/Auckland") # "2013-08-04 10:15:03 NZST"
+   [tutorial lubrodate](https://lubridate.tidyverse.org/)
+   [formats of dates](https://www.statmethods.net/input/dates.html)
+    
+    
 ##### Clean variables into the workspace
     rm(list = ls())
 
 ##### Links
 [Tutorial plyr] (http://plyr.had.co.nz/09-user/)
+[Competitions in data Science] (https://lubridate.tidyverse.org/)
