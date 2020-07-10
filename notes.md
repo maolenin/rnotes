@@ -286,7 +286,8 @@
     mdy("08/04/2013") # "2013-08-04 UTC"
     mdy_hms("08/04/2013 10:15:03") # "2013-08-04 10:15:03 UTC"
     mdy_hms("08/04/2013 10:15:03", tz="Pacific/Auckland") # "2013-08-04 10:15:03 NZST"
-   [tutorial lubrodate](https://lubridate.tidyverse.org/)
+   [tutorial lubridate](https://lubridate.tidyverse.org/)
+   
    [formats of dates](https://www.statmethods.net/input/dates.html)
     
     
@@ -295,4 +296,5 @@
 
 ##### Links
 [Tutorial plyr] (http://plyr.had.co.nz/09-user/)
+
 [Competitions in data Science] (https://lubridate.tidyverse.org/)
