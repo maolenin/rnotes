@@ -291,6 +291,7 @@
    [formats of dates](https://www.statmethods.net/input/dates.html)
 
 ##### Plots
+###### Base
     boxplot(pollution$pm25, col = "blue")
     hist(pollution$pm25, col = "green")
     rug(pollution$pm25)
@@ -315,6 +316,19 @@
     par(mfrow = c(1, 2), mar = c(5, 4, 2, 1))
     with(subset(pollution, region == "west"), plot(latitude, pm25, main = "West"))
     with(subset(pollution, region == "east"), plot(latitude, pm25, main = "East"))
+###### ggplot2
+    qplot(displ, hwy, mpg)
+    qplot(x = displ, y = hwy, data = mpg)    
+    qplot(x = displ, y = c(hwy, cty), data = mpg)    
+    qplot(x = displ, y = hwy, data = mpg, color = drv)
+    qplot(x = displ, y = hwy, data = mpg, color = drv, geom = c("point", "smooth"))
+    qplot(hwy, mpg, color = drv)
+    qplot(y = hwy, data = mpg, color = drv)    
+    qplot(drv, hwy, data = mpg, geom = "boxplot")
+    qplot(drv, hwy, data = mpg, geom = "boxplot", color = manufacturer)
+    qplot(hwy, data = mpg, fill = drv)
+    qplot(displ, hwy, data = mpg, facets = .~drv)    
+    qplot(hwy, data = mpg, facets = drv~., binwidth = 2)
     
 ##### Clean variables into the workspace
     rm(list = ls())
