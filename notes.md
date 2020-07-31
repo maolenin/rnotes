@@ -332,6 +332,10 @@
     
 ##### Clean variables into the workspace
     rm(list = ls())
+    
+##### Change the language of weekdays
+    Sys.getlocale("LC_TIME") # Obtain the local time
+    Sys.setlocale("LC_TIME", "English") # Set to English the weekdays
 
 ##### Links
 [Tutorial plyr] (http://plyr.had.co.nz/09-user/)
