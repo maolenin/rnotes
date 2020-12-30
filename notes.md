@@ -14,7 +14,7 @@
     # i-th element of `u1` squared into `i`-th position of `usq`
     usq[i] <- u1[i]*u1[i]
     print(usq[i])
-}
+    }
 
 ##### Sorting
     sort(x$var1)
