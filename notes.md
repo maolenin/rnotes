@@ -8,7 +8,14 @@
     x[(x$var1 <= 3 & x$var3 > 11),]
     x[(x$var1 <= 3 | x$var3 > 15),]
     x[which(x$var2 > 8),] # eliminating NAs 
-    
+
+##### Loops    
+    for(i in 1:10) {
+    # i-th element of `u1` squared into `i`-th position of `usq`
+    usq[i] <- u1[i]*u1[i]
+    print(usq[i])
+}
+
 ##### Sorting
     sort(x$var1)
     sort(x$var1, decreasing = TRUE)
